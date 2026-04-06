@@ -29,7 +29,7 @@ class JsonStream implements JsonStreamInterface {
         if($contents === ''){
             return null;
         }
-        $decodedContents = \GuzzleHttp\json_decode($contents);
+        $decodedContents = \GuzzleHttp\Utils::jsonDecode($contents);
 
         if(json_last_error() !== JSON_ERROR_NONE){
             throw new \RuntimeException('Error trying to decode response: ' . json_last_error_msg());

@@ -80,7 +80,7 @@ class CacheEntry {
         $this->staleAt = $staleAt;
 
         if($response->hasHeader('Cache-Control')){
-            $cacheControlHeader = \GuzzleHttp\Psr7\parse_header($response->getHeader('Cache-Control'));
+            $cacheControlHeader = \GuzzleHttp\Psr7\Header::parse($response->getHeader('Cache-Control'));
 
             if(is_null($staleIfErrorTo)){
                 $staleIfError = (int)GuzzleCacheMiddleware::arrayKeyDeep($cacheControlHeader, 'stale-if-error');
@@ -158,7 +158,7 @@ class CacheEntry {
     public function getVaryHeaders() : array {
         $headers = [];
         if($this->response->getHeader('Vary')){
-            $varyHeader = \GuzzleHttp\Psr7\parse_header($this->response->getHeader('Vary'));
+            $varyHeader = \GuzzleHttp\Psr7\Header::parse($this->response->getHeader('Vary'));
             $headers = GuzzleCacheMiddleware::arrayFlattenByValue($varyHeader);
         }
         return $headers;
@@ -266,7 +266,7 @@ class CacheEntry {
     public function __wakeup() : void {
         if($this->response !== null){
             // We re-create the stream of the response
-            $this->response = $this->response->withBody(\GuzzleHttp\Psr7\stream_for($this->responseBody));
+            $this->response = $this->response->withBody(\GuzzleHttp\Psr7\Utils::streamFor($this->responseBody));
         }
     }
 

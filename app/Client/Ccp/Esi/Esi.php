@@ -76,7 +76,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             $this->getRequestOptions(),
             function($body) : array {
                 $serverStatus = [];
-                if(!$body->error){
+                if(!($body->error ?? null)){
                     $serverStatus['status'] = (new Mapper\Status\Status($body))->getData();
                 }else{
                     $serverStatus['error'] = $body->error;

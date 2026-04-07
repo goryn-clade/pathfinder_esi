@@ -10,8 +10,14 @@ namespace Exodus4D\ESI\Lib\Stream;
 
 
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
+use Psr\Http\Message\StreamInterface;
 
 class JsonStream implements JsonStreamInterface {
+
+    // Declare $stream explicitly — StreamDecoratorTrait sets it in __construct()
+    // but only documents it via @property, not a real declaration.
+    // PHP 8.2 deprecates dynamic properties, so we declare it here.
+    protected StreamInterface $stream;
 
     // we need to "overwrite" the default Trait getContents() method
     // -> therefore we make it accessible as traitGetContents() and call it from

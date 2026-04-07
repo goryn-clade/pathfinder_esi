@@ -176,7 +176,7 @@ class GuzzleCcpErrorLimitMiddleware extends AbstractGuzzleMiddleware {
                 $esiErrorRate = (array)$cacheItem->get();
 
                 // increase error count for this $url
-                $errorCount = (int)$esiErrorRate['count'] + 1;
+                $errorCount = (int)($esiErrorRate['count'] ?? 0) + 1;
                 $esiErrorRate['count'] = $errorCount;
 
                 // default log data

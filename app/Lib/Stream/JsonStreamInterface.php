@@ -13,8 +13,12 @@ use Psr\Http\Message\StreamInterface;
 
 interface JsonStreamInterface extends StreamInterface {
 
-    // getContents() is intentionally not re-declared here.
-    // JsonStream::getContents() returns decoded JSON (mixed), which diverges from
-    // StreamInterface::getContents(): string in PSR-7 v2. The #[\ReturnTypeWillChange]
-    // attribute on the JsonStream class implementation suppresses the PHP 8 fatal.
+    /**
+     * Decode the stream body as JSON and return the parsed value.
+     * This is separate from getContents() (which returns the raw string per PSR-7 v2)
+     * because StreamInterface::getContents(): string cannot be overridden with a mixed
+     * return type in PHP 8 — #[\ReturnTypeWillChange] only applies to PHP built-in interfaces.
+     * @return mixed
+     */
+    public function decode(): mixed;
 }

@@ -892,7 +892,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
             }
 
             $body = $response->getBody();
-            $bodyContent = $body->getContents();
+            $bodyContent = ($body instanceof JsonStreamInterface) ? $body->decode() : $body->getContents();
 
             // call custom formatter for current $result (same $key)
             $bodyContent = is_callable($formatter = $requestConfig->getFormatter()) ? $formatter($bodyContent) : $bodyContent;
@@ -955,7 +955,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
             }
 
             $body = $response->getBody();
-            $bodyContent = $body->getContents();
+            $bodyContent = ($body instanceof JsonStreamInterface) ? $body->decode() : $body->getContents();
 
             // call custom formatter for current $result (same $key)
             return is_callable($formatter = $requestConfigs[$key]->getFormatter()) ? $formatter($bodyContent) : $bodyContent;

@@ -429,10 +429,10 @@ class GuzzleLogMiddleware {
                 if(!($body instanceof JsonStreamInterface)){
                     // ... create temp JsonStream
                     $jsonBody = new JsonStream($body);
-                    $content = $jsonBody->getContents();
+                    $content = $jsonBody->decode();
                 }else{
                     // ... already JsonStream -> get content
-                    $content = $body->getContents();
+                    $content = $body->decode();
                 }
 
                 // ... check if "error" key exists in content, with error message

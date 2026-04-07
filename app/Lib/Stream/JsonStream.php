@@ -21,10 +21,18 @@ class JsonStream implements JsonStreamInterface {
     }
 
     /**
-     * @return mixed|string|null
+     * Return the raw stream contents as a string (PSR-7 v2 compliant).
      */
-    #[\ReturnTypeWillChange]
-    public function getContents(){
+    public function getContents(): string {
+        return $this->traitGetContents();
+    }
+
+    /**
+     * Decode the stream body as JSON and return the parsed value.
+     * Use this instead of getContents() when you need the decoded object/array.
+     * @return mixed
+     */
+    public function decode(): mixed {
         $contents = $this->traitGetContents();
 
         if($contents === ''){

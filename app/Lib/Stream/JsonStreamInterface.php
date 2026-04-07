@@ -13,13 +13,8 @@ use Psr\Http\Message\StreamInterface;
 
 interface JsonStreamInterface extends StreamInterface {
 
-    /**
-     * Returns the remaining contents as decoded JSON (mixed type, not a string)
-     *
-     * @return mixed
-     * @throws \RuntimeException if unable to read or an error occurs while
-     *     reading.
-     */
-    #[\ReturnTypeWillChange]
-    public function getContents();
+    // getContents() is intentionally not re-declared here.
+    // JsonStream::getContents() returns decoded JSON (mixed), which diverges from
+    // StreamInterface::getContents(): string in PSR-7 v2. The #[\ReturnTypeWillChange]
+    // attribute on the JsonStream class implementation suppresses the PHP 8 fatal.
 }

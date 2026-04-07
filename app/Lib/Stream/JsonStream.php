@@ -23,6 +23,7 @@ class JsonStream implements JsonStreamInterface {
     /**
      * @return mixed|string|null
      */
+    #[\ReturnTypeWillChange]
     public function getContents(){
         $contents = $this->traitGetContents();
 

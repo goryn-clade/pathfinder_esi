@@ -529,8 +529,8 @@ class GuzzleLogMiddleware {
      */
     protected function mergeOptions(array $options = [], array $optionsNew = []) : array {
         // array options must be merged rather than replaced
-        $optionsNew['log_on_status'] = array_unique(array_merge((array)$options['log_on_status'], (array)$optionsNew['log_on_status']));
-        $optionsNew['log_off_status'] = array_unique(array_merge((array)$options['log_off_status'], (array)$optionsNew['log_off_status']));
+        $optionsNew['log_on_status'] = array_unique(array_merge((array)($options['log_on_status'] ?? []), (array)($optionsNew['log_on_status'] ?? [])));
+        $optionsNew['log_off_status'] = array_unique(array_merge((array)($options['log_off_status'] ?? []), (array)($optionsNew['log_off_status'] ?? [])));
 
         return array_replace($options, $optionsNew);
     }

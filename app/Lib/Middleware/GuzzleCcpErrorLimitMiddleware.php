@@ -286,7 +286,7 @@ class GuzzleCcpErrorLimitMiddleware extends AbstractGuzzleMiddleware {
         if($cacheItem->isHit()){
             // check if it is blocked
             $esiErrorRate = (array)$cacheItem->get();
-            if($esiErrorRate['blocked']){
+            if($esiErrorRate['blocked'] ?? false){
                 $blockedUntil = $esiErrorRate['expiresAt'];
             }
         }

@@ -66,7 +66,7 @@ class Sso extends Ccp\AbstractCcp implements SsoInterface {
             $requestOptions,
             function($body) : array {
                 $accessData = [];
-                if(!$body->error){
+                if(!($body->error ?? null)){
                     $accessData = (new Mapper\Sso\Access($body))->getData();
                 }
 

@@ -324,7 +324,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             $this->getRequestOptions(),
             function($body) use ($factionId) : array {
                 $factionData = [];
-                if(is_object() && ->error){
+                if(is_object($body) && $body->error){
                     $factionData['error'] = ($body->error ?? null);
                 }else{
                     foreach((array)$body as $data){
@@ -351,7 +351,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             $this->getRequestOptions(),
             function($body) use ($raceId) : array {
                 $raceData = [];
-                if(is_object() && ->error){
+                if(is_object($body) && $body->error){
                     $raceData['error'] = ($body->error ?? null);
                 }else{
                     foreach((array)$body as $data){
@@ -882,7 +882,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             function($body) : array {
                 $return = [];
                 // "null" === success => There is no response body send...
-                if(is_object() && ->error){
+                if(is_object($body) && $body->error){
                     $return['error'] = self::ERROR_ESI_WAYPOINT;
                 }
 
@@ -905,7 +905,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             function($body) : array {
                 $return = [];
                 // "null" === success => There is no response body send...
-                if(is_object() && ->error){
+                if(is_object($body) && $body->error){
                     $return['error'] = self::ERROR_ESI_WINDOW;
                 }
 

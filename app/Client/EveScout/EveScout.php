@@ -21,7 +21,7 @@ class EveScout extends Client\AbstractApi implements EveScoutInterface {
             [],
             function($body) : array {
                 $connectionsData = [];
-                if(!$body->error){
+                if(!isset($body->error)){
                     foreach((array)$body as $data){
                         $connectionsData['connections'][(int)$data->id] = (new Mapper\Connection($data))->getData();
                     }

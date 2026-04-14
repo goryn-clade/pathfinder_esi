@@ -79,7 +79,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                 if(!($body->error ?? null)){
                     $serverStatus['status'] = (new Mapper\Status\Status($body))->getData();
                 }else{
-                    $serverStatus['error'] = (->error ?? null);
+                    $serverStatus['error'] = ($body->error ?? null);
                 }
 
                 return $serverStatus;
@@ -144,7 +144,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                 if(!(is_object($body) && $body->error)){
                     $clonesData['home'] = (new Mapper\Character\CharacterClone($body->home_location))->getData();
                 }else{
-                    $clonesData['error'] = (->error ?? null);
+                    $clonesData['error'] = ($body->error ?? null);
                 }
 
                 return $clonesData;
@@ -229,7 +229,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         $roles = array_map('strtolower', (array)$roles);
                     });
                 }else{
-                    $rolesData['error'] = (->error ?? null);
+                    $rolesData['error'] = ($body->error ?? null);
                 }
 
                 return $rolesData;
@@ -253,7 +253,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         $corporationData['id'] = $corporationId;
                     }
                 }else{
-                    $corporationData['error'] = (->error ?? null);
+                    $corporationData['error'] = ($body->error ?? null);
                 }
 
                 return $corporationData;
@@ -277,7 +277,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         $allianceData['id'] = $allianceId;
                     }
                 }else{
-                    $allianceData['error'] = (->error ?? null);
+                    $allianceData['error'] = ($body->error ?? null);
                 }
 
                 return $allianceData;
@@ -306,7 +306,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         $rolesData['roles'][(int)$characterRoleData->character_id] = array_map('strtolower', (array)$characterRoleData->roles);
                     }
                 }else{
-                    $rolesData['error'] = (->error ?? null);
+                    $rolesData['error'] = ($body->error ?? null);
                 }
 
                 return $rolesData;
@@ -325,7 +325,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             function($body) use ($factionId) : array {
                 $factionData = [];
                 if(is_object() && ->error){
-                    $factionData['error'] = (->error ?? null);
+                    $factionData['error'] = ($body->error ?? null);
                 }else{
                     foreach((array)$body as $data){
                         $factionData['factions'][(int)$data->faction_id] = (new Mapper\Universe\Faction($data))->getData();
@@ -352,7 +352,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             function($body) use ($raceId) : array {
                 $raceData = [];
                 if(is_object() && ->error){
-                    $raceData['error'] = (->error ?? null);
+                    $raceData['error'] = ($body->error ?? null);
                 }else{
                     foreach((array)$body as $data){
                         $raceData['races'][(int)$data->race_id] = (new Mapper\Universe\Race($data))->getData();
@@ -582,7 +582,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         }
                     }
                 }else{
-                    $universeData['error'] = (->error ?? null);
+                    $universeData['error'] = ($body->error ?? null);
                 }
 
                 return $universeData;
@@ -731,7 +731,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         $structureData['id'] = $structureId;
                     }
                 }else{
-                    $structureData['error'] = (->error ?? null);
+                    $structureData['error'] = ($body->error ?? null);
                 }
 
                 return $structureData;
@@ -752,7 +752,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                 if(!(is_object($body) && $body->error)){
                     $stationData = (new Mapper\Universe\Station($body))->getData();
                 }else{
-                    $stationData['error'] = (->error ?? null);
+                    $stationData['error'] = ($body->error ?? null);
                 }
 
                 return $stationData;
@@ -792,7 +792,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                 if(!(is_object($body) && $body->error)){
                     $attributeData = (new Mapper\Dogma\Attribute($body))->getData();
                 }else{
-                    $attributeData['error'] = (->error ?? null);
+                    $attributeData['error'] = ($body->error ?? null);
                 }
 
                 return $attributeData;
@@ -814,7 +814,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         $systemsData['systems'][(int)$data->solar_system_id] = (new Mapper\FactionWarfare\System($data))->getData();
                     }
                 }else{
-                    $systemsData['error'] = (->error ?? null);
+                    $systemsData['error'] = ($body->error ?? null);
                 }
 
                 return $systemsData;
@@ -858,7 +858,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                 if(!(is_object($body) && $body->error)){
                     $routeData['route'] = array_unique(array_map('intval', (array)$body));
                 }else{
-                    $routeData['error'] = (->error ?? null);
+                    $routeData['error'] = ($body->error ?? null);
                 }
                 return $routeData;
             }
@@ -928,7 +928,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                         $sovData['map'][(int)$data->system_id] = (new Mapper\Sovereignty\Map($data))->getData();
                     }
                 }else{
-                    $sovData['error'] = (->error ?? null);
+                    $sovData['error'] = ($body->error ?? null);
                 }
 
                 return $sovData;
@@ -963,7 +963,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                 if(!(is_object($body) && $body->error)){
                     $searchData = (new Mapper\Search\Search($body))->getData();
                 }else{
-                    $searchData['error'] = (->error ?? null);
+                    $searchData['error'] = ($body->error ?? null);
                 }
 
                 return $searchData;

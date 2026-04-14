@@ -661,7 +661,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @return \Closure
      */
     protected function log() : \Closure {
-        return function(string $action, string $level, string $message, array $data = [], string $tag = 'default'){
+        return function(string $action, string $level, string $message, array $data = [], string $tag = 'default'): void{
             if(is_callable($newLog = $this->getNewLog())){
                 /**
                  * @var LogInterface $log
@@ -693,7 +693,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
         return new WebClient(
             $this->getUrl(),
             $this->getClientConfig(),
-            function(HandlerStack &$stack){
+            function(HandlerStack &$stack): void{
                 $this->initStack($stack);
             }
         );

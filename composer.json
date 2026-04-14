@@ -32,5 +32,8 @@
     "guzzlehttp/guzzle": "^7.0",
     "caseyamcl/guzzle_retry_middleware": "^2.9",
     "cache/void-adapter": "^1.1"
+  },
+  "require-dev": {
+    "rector/rector": "^2.4"
   }
 }

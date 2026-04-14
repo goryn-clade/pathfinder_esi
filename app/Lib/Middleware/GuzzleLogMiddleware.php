@@ -185,7 +185,7 @@ class GuzzleLogMiddleware {
 
         // TransferStats can only be accessed through a callback -> 'on_stats' Core Guzzle option
         if($options['log_enabled'] && $options['log_stats'] && !isset($options['on_stats'])){
-            $options['on_stats'] = function(TransferStats $stats){
+            $options['on_stats'] = function(TransferStats $stats): void{
                 $this->stats = $stats;
             };
         }

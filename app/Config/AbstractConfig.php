@@ -40,7 +40,7 @@ class AbstractConfig implements ConfigInterface {
         $endpointsData = [];
         $conf = static::$spec;
 
-        array_walk_recursive($conf, function($value, $key) use (&$endpointsData){
+        array_walk_recursive($conf, function($value, $key) use (&$endpointsData): void{
             if(is_string($value) && !empty($value)){
                 // get version from route and remove it
                 $version = $this->stripVersion($value);

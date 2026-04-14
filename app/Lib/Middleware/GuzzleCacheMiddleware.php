@@ -343,7 +343,7 @@ class GuzzleCacheMiddleware {
             $request = $request->withHeader(self::DEFAULT_CACHE_RE_VALIDATION_HEADER, '1');
             $this->waitingRevalidate[] = $this->client
                 ->sendAsync($request)
-                ->then(function(ResponseInterface $response) use ($request, &$cacheStrategy, $cacheEntry){
+                ->then(function(ResponseInterface $response) use ($request, &$cacheStrategy, $cacheEntry): void{
                     $update = false;
                     if($response->getStatusCode() == 304){
                         // Not modified => cache entry is re-validate
@@ -408,7 +408,7 @@ class GuzzleCacheMiddleware {
     public static function inArrayDeep(array $array, string $search) : bool {
         $found = false;
         array_walk($array, function($value, /** @noinspection PhpUnusedParameterInspection */
-                                    $key, $search) use (&$found) {
+                                    $key, $search) use (&$found): void {
             if(!$found && is_array($value) && in_array($search, $value)){
                 $found = true;
             }
@@ -425,7 +425,7 @@ class GuzzleCacheMiddleware {
     public static function arrayKeyDeep(array $array, string $searchKey) : string {
         $found = '';
         array_walk($array, function($value, /** @noinspection PhpUnusedParameterInspection */
-                                    $key, $searchKey) use (&$found) {
+                                    $key, $searchKey) use (&$found): void {
             if(empty($found) && is_array($value) && array_key_exists($searchKey, $value)){
                 $found = (string)$value[$searchKey];
             }
@@ -440,7 +440,7 @@ class GuzzleCacheMiddleware {
      */
     public static function arrayFlattenByValue(array $array) : array {
         $return = [];
-        array_walk_recursive($array, function($value) use (&$return) {$return[] = $value;});
+        array_walk_recursive($array, function($value) use (&$return): void {$return[] = $value;});
         return $return;
     }
 

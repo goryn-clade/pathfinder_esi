@@ -225,7 +225,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
                 $rolesData = [];
                 if(!$body->error){
                     $rolesData = (new Mapper\Character\Roles($body))->getData();
-                    array_walk($rolesData, function(&$roles){
+                    array_walk($rolesData, function(&$roles): void{
                         $roles = array_map('strtolower', (array)$roles);
                     });
                 }else{
@@ -971,57 +971,6 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
         );
     }
 
-    /**
-     * @param string $version
-     * @param bool $forRoutes
-     * @return RequestConfig
-     */
-    protected function getStatusRequest(string $version = 'last', bool $forRoutes = false) : RequestConfig {
-        $requestOptions = [
-            'query' => [
-                'version' => $version
-            ]
-        ];
-
-        return new RequestConfig(
-            WebClient::newRequest('GET', $this->getEndpointURI(['meta', 'status', 'GET'])),
-            $requestOptions,
-            function($body) use ($forRoutes) : array {
-                $statusData = [];
-                if(!$body->error){
-                    foreach((array)$body as $status){
-                        $statusData['status'][] = (new Mapper\Status($status))->getData();
-                    }
-
-                    if($forRoutes){
-                        // data for all configured ESI endpoints
-                        $statusDataRoutes = [
-                            'status' => $this->getConfig()->getEndpointsData()
-                        ];
-
-                        foreach((array)$statusDataRoutes['status'] as $key => $data){
-                            foreach((array)$statusData['status'] as $status){
-                                if(
-                                    $status['route'] == $data['route'] &&
-                                    $status['method'] == $data['method']
-                                ){
-                                    $statusDataRoutes['status'][$key]['status'] = $status['status'];
-                                    $statusDataRoutes['status'][$key]['tags']   = $status['tags'];
-                                    break;
-                                }
-                            }
-                        }
-
-                        $statusData = $statusDataRoutes;
-                    }
-                }else{
-                    $statusData['error'] = $body->error;
-                }
-
-                return $statusData;
-            }
-        );
-    }
 
     /**
      * @return RequestConfig
@@ -1048,7 +997,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      */
     protected function formatUrlParams(array $query = [], array $format = []) : array {
 
-        $formatter = function(&$item, $key, $params) use (&$formatter) {
+        $formatter = function(&$item, $key, $params) use (&$formatter): void {
             $params['depth'] = isset($params['depth']) ? ++$params['depth'] : 0;
             $params['firstKey'] = isset($params['firstKey']) ? $params['firstKey'] : $key;
 

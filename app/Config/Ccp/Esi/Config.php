@@ -17,11 +17,6 @@ class Config extends AbstractConfig {
      * Swagger endpoint configuration
      */
     protected static $spec = [
-        'meta' => [
-            'status' => [
-                'GET' => '/status.json'
-            ]
-        ],
         'status' => [
             'GET' => '/v1/status/'
         ],

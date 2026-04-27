@@ -109,6 +109,26 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
     }
 
     /**
+     * @param array $characterIds
+     * @return RequestConfig
+     */
+    protected function getCharactersAffiliationRequest(array $characterIds) : RequestConfig {
+        return new RequestConfig(
+            WebClient::newRequest('POST', $this->getEndpointURI(['characters', 'affiliation', 'POST'])),
+            $this->getRequestOptions('', $characterIds),
+            function($body) : array {
+                $affiliationData = [];
+                if(!(is_object($body) && ($body->error ?? null))){
+                    foreach((array)$body as $entry){
+                        $affiliationData[] = (new Mapper\Character\Affiliation($entry))->getData();
+                    }
+                }
+                return $affiliationData;
+            }
+        );
+    }
+
+    /**
      * @param int $characterId
      * @return RequestConfig
      */

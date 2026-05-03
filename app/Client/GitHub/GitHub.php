@@ -35,8 +35,8 @@ class GitHub extends Client\AbstractApi implements GitHubInterface {
             $requestOptions,
             function($body) : array {
                 $releasesData = [];
-                if(!$body->error){
-                    foreach((array)$body as $data){
+                if(is_array($body)){
+                    foreach($body as $data){
                         $releasesData[] = (new Mapper\GitHub\Release($data))->getData();
                     }
                 }
@@ -66,7 +66,7 @@ class GitHub extends Client\AbstractApi implements GitHubInterface {
             $requestOptions,
             function($body) : string {
                 $html = '';
-                if(!$body->error){
+                if(is_string($body)){
                     $html = (string)$body;
                 }
 

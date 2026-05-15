@@ -16,6 +16,14 @@ use Psr\Http\Message\ResponseInterface;
 class CacheEntry {
 
     /**
+     * Request header names stripped from $request before serialization.
+     * Prevents Authorization tokens / cookies from being written to the cache
+     * backend (Redis, Filesystem) as part of the serialized CacheEntry.
+     * Matching is case-insensitive per PSR-7 / RFC 7230.
+     */
+    private const SENSITIVE_REQUEST_HEADERS = ['Authorization', 'Cookie', 'Proxy-Authorization'];
+
+    /**
      * @var RequestInterface
      */
     protected $request;
@@ -256,6 +264,12 @@ class CacheEntry {
             // Stream/Resource can't be serialized... So we copy the content
             $this->responseBody = (string) $this->response->getBody();
             $this->response->getBody()->rewind();
+        }
+        if($this->request !== null){
+            // Strip sensitive headers so Bearer tokens / cookies don't land in the cache backend
+            foreach(self::SENSITIVE_REQUEST_HEADERS as $headerName){
+                $this->request = $this->request->withoutHeader($headerName);
+            }
         }
         return array_keys(get_object_vars($this));
     }

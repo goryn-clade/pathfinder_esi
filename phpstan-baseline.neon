@@ -1,0 +1,127 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^PHPDoc tag @return with type \(callable\)\|null is not subtype of native type Closure\|null\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: app/Client/AbstractApi.php
+
+		-
+			message: '#^Parameter \#2 \$json of static method Exodus4D\\ESI\\Lib\\WebClient\:\:newErrorResponse\(\) expects bool, string given\.$#'
+			identifier: argument.type
+			count: 6
+			path: app/Client/AbstractApi.php
+
+		-
+			message: '#^Access to undefined constant Exodus4D\\ESI\\Client\\ApiInterface\:\:DEFAULT_BATCH_CONCURRENCY\.$#'
+			identifier: classConstant.notFound
+			count: 1
+			path: app/Client/ApiInterface.php
+
+		-
+			message: '#^Parameter \#2 \$content of method Exodus4D\\ESI\\Client\\Ccp\\Esi\\Esi\:\:getRequestOptions\(\) expects null, array given\.$#'
+			identifier: argument.type
+			count: 3
+			path: app/Client/Ccp/Esi/Esi.php
+
+		-
+			message: '#^Parameter &\$endpoint by\-ref type of method Exodus4D\\ESI\\Config\\AbstractConfig\:\:stripVersion\(\) expects string, string\|null given\.$#'
+			identifier: parameterByRef.type
+			count: 1
+			path: app/Config/AbstractConfig.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#4 \$staleIfErrorTo \(DateTime\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: app/Lib/Middleware/Cache/CacheEntry.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#5 \$staleWhileRevalidateTo \(DateTime\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: app/Lib/Middleware/Cache/CacheEntry.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Psr\\Http\\Message\\MessageInterface\:\:withHeader\(\) expects array\<string\>\|string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Lib/Middleware/Cache/CacheEntry.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#1 \$cache \(Exodus4D\\ESI\\Lib\\Middleware\\Cache\\Storage\\CacheStorageInterface\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: app/Lib/Middleware/Cache/Strategy/PrivateCacheStrategy.php
+
+		-
+			message: '#^Property Exodus4D\\ESI\\Lib\\Middleware\\GuzzleCacheMiddleware\:\:\$waitingRevalidate \(array\<GuzzleHttp\\Promise\\Promise\>\) does not accept array\<GuzzleHttp\\Promise\\PromiseInterface\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Lib/Middleware/GuzzleCacheMiddleware.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: app/Lib/Middleware/GuzzleCacheMiddleware.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: app/Lib/Middleware/GuzzleCcpErrorLimitMiddleware.php
+
+		-
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
+			count: 2
+			path: app/Lib/Middleware/GuzzleCcpLogMiddleware.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: app/Lib/Middleware/GuzzleCcpLogMiddleware.php
+
+		-
+			message: '#^Anonymous function has an unused use \$request\.$#'
+			identifier: closure.unusedUse
+			count: 1
+			path: app/Lib/Middleware/GuzzleJsonMiddleware.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: app/Lib/Middleware/GuzzleJsonMiddleware.php
+
+		-
+			message: '#^Parameter \#1 \$string of function substr expects string, int given\.$#'
+			identifier: argument.type
+			count: 4
+			path: app/Lib/Middleware/GuzzleLogMiddleware.php
+
+		-
+			message: '#^Unsafe usage of new static\(\)\.$#'
+			identifier: new.static
+			count: 1
+			path: app/Lib/Middleware/GuzzleLogMiddleware.php
+
+		-
+			message: '#^Parameter \#2 \$replace of function str_replace expects array\<string\>\|string, array\<int, int\|string\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Lib/Middleware/GuzzleRetryMiddleware.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: app/Lib/Stream/JsonStream.php
+
+		-
+			message: '#^Array has 2 duplicate keys with value ''updated_at'' \(''updated_at'', ''updated_at''\)\.$#'
+			identifier: array.duplicateKey
+			count: 1
+			path: app/Mapper/EveScout/Connection.php

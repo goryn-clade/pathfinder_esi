@@ -402,6 +402,15 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @param bool $verify
      */
     public function setVerify(bool $verify){
+        if($verify === false && is_callable($log = $this->log())){
+            $log(
+                $this->logFile,
+                'warning',
+                'TLS verification disabled — outgoing ESI/SSO requests are vulnerable to MITM. Tokens may be exposed on the wire.',
+                [],
+                'danger'
+            );
+        }
         $this->verify = $verify;
     }
 
@@ -410,7 +419,16 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @param bool|resource $debugRequests
      */
     public function setDebugRequests($debugRequests = self::DEFAULT_DEBUG_REQUESTS){
-        $this->debugRequests  = $debugRequests;
+        if($debugRequests && is_callable($log = $this->log())){
+            $log(
+                $this->logFile,
+                'warning',
+                'Guzzle debug=true writes full request transcripts (Authorization headers, form bodies with access_token/refresh_token/client_secret) to STDOUT. Use only for local debugging.',
+                [],
+                'danger'
+            );
+        }
+        $this->debugRequests = $debugRequests;
     }
 
     /**

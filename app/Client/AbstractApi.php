@@ -86,18 +86,18 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * WebClient instance
      * @var WebClient|null
      */
-    private $client                                 = null;
+    private ?WebClient $client                                 = null;
 
     /**
      * base API URL
      * @var string
      */
-    private $url                                    = '';
+    private string $url                                    = '';
 
     /**
      * @var string
      */
-    private $acceptType                             = self::DEFAULT_ACCEPT_TYPE;
+    private string $acceptType                             = self::DEFAULT_ACCEPT_TYPE;
 
     /**
      * Timeout of the request in seconds
@@ -105,14 +105,14 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @see https://guzzle.readthedocs.io/en/latest/request-options.html#timeout
      * @var float
      */
-    private $timeout                                = self::DEFAULT_TIMEOUT;
+    private float $timeout                                = self::DEFAULT_TIMEOUT;
 
     /**
      * Timeout for server connect in seconds
      * @see https://guzzle.readthedocs.io/en/latest/request-options.html#connect-timeout
      * @var float
      */
-    private $connectTimeout                         = self::DEFAULT_CONNECT_TIMEOUT;
+    private float $connectTimeout                         = self::DEFAULT_CONNECT_TIMEOUT;
 
     /**
      * Read timeout for Streams
@@ -120,13 +120,13 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @see https://guzzle.readthedocs.io/en/latest/request-options.html#read-timeout
      * @var float
      */
-    private $readTimeout                            = self::DEFAULT_READ_TIMEOUT;
+    private float $readTimeout                            = self::DEFAULT_READ_TIMEOUT;
 
     /**
      * Max count of parallel requests (batch request)
      * @var int
      */
-    private $batchConcurrency                       = self::DEFAULT_BATCH_CONCURRENCY;
+    private int $batchConcurrency                       = self::DEFAULT_BATCH_CONCURRENCY;
 
     /**
      * decode response body
@@ -150,7 +150,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @see http://docs.guzzlephp.org/en/stable/request-options.html#verify
      * @var bool
      */
-    private $verify                                 = true;
+    private bool $verify                                 = true;
 
     /**
      * Debug requests if enabled
@@ -163,13 +163,13 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * Debug level for API requests
      * @var int
      */
-    private $debugLevel                             = self::DEFAULT_DEBUG_LEVEL;
+    private int $debugLevel                             = self::DEFAULT_DEBUG_LEVEL;
 
     /**
      * UserAgent send with requests
      * @var string
      */
-    private $userAgent                              = '';
+    private string $userAgent                              = '';
 
     /**
      * Callback function that returns new CacheItemPoolInterface
@@ -179,7 +179,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @see http://www.php-cache.com
      * @var null|\Closure
      */
-    private $getCachePool                           = null;
+    private ?\Closure $getCachePool                           = null;
 
     /**
      * Callback function that returns new Log object
@@ -199,7 +199,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * Endpoint config for this API
      * @var ConfigInterface
      */
-    protected $config;
+    protected ?ConfigInterface $config = null;
 
     // Guzzle Log Middleware config -----------------------------------------------------------------------------------
 
@@ -207,47 +207,41 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @see GuzzleLogMiddleware::DEFAULT_LOG_ENABLED
      * @var bool
      */
-    private $logEnabled                             = GuzzleLogMiddleware::DEFAULT_LOG_ENABLED;
+    private bool $logEnabled                             = GuzzleLogMiddleware::DEFAULT_LOG_ENABLED;
 
     /**
      * @see GuzzleLogMiddleware::DEFAULT_LOG_STATS
      * @var bool
      */
-    private $logStats                               = GuzzleLogMiddleware::DEFAULT_LOG_STATS;
+    private bool $logStats                               = GuzzleLogMiddleware::DEFAULT_LOG_STATS;
 
     /**
      * @see GuzzleLogMiddleware::DEFAULT_LOG_CACHE
      * @var bool
      */
-    private $logCache                               = GuzzleLogMiddleware::DEFAULT_LOG_CACHE;
+    private bool $logCache                               = GuzzleLogMiddleware::DEFAULT_LOG_CACHE;
 
     /**
      * @see GuzzleLogMiddleware::DEFAULT_LOG_CACHE_HEADER
      * @var string
      */
-    private $logCacheHeader                         = GuzzleLogMiddleware::DEFAULT_LOG_CACHE_HEADER;
+    private string $logCacheHeader                         = GuzzleLogMiddleware::DEFAULT_LOG_CACHE_HEADER;
 
-    /**
-     * @var GuzzleLogMiddleware::DEFAULT_LOG_REQUEST_HEADERS
-     */
-    private $logRequestHeaders                      = GuzzleLogMiddleware::DEFAULT_LOG_REQUEST_HEADERS;
+    private bool $logRequestHeaders                      = GuzzleLogMiddleware::DEFAULT_LOG_REQUEST_HEADERS;
 
-    /**
-     * @var GuzzleLogMiddleware::DEFAULT_LOG_RESPONSE_HEADERS
-     */
-    private $logResponseHeaders                     = GuzzleLogMiddleware::DEFAULT_LOG_RESPONSE_HEADERS;
+    private bool $logResponseHeaders                     = GuzzleLogMiddleware::DEFAULT_LOG_RESPONSE_HEADERS;
 
     /**
      * @see GuzzleLogMiddleware::DEFAULT_LOG_ALL_STATUS
      * @var bool
      */
-    private $logAllStatus                           = GuzzleLogMiddleware::DEFAULT_LOG_ALL_STATUS;
+    private bool $logAllStatus                           = GuzzleLogMiddleware::DEFAULT_LOG_ALL_STATUS;
 
     /**
      * @see GuzzleLogMiddleware::DEFAULT_LOG_FILE
      * @var string
      */
-    private $logFile                                = GuzzleLogMiddleware::DEFAULT_LOG_FILE;
+    private string $logFile                                = GuzzleLogMiddleware::DEFAULT_LOG_FILE;
 
     // Guzzle Cache Middleware config ---------------------------------------------------------------------------------
 
@@ -255,19 +249,19 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @see GuzzleCacheMiddleware::DEFAULT_CACHE_ENABLED
      * @var bool
      */
-    private $cacheEnabled                           = GuzzleCacheMiddleware::DEFAULT_CACHE_ENABLED;
+    private bool $cacheEnabled                           = GuzzleCacheMiddleware::DEFAULT_CACHE_ENABLED;
 
     /**
      * @see GuzzleCacheMiddleware::DEFAULT_CACHE_DEBUG
      * @var bool
      */
-    private $cacheDebug                             = GuzzleCacheMiddleware::DEFAULT_CACHE_DEBUG;
+    private bool $cacheDebug                             = GuzzleCacheMiddleware::DEFAULT_CACHE_DEBUG;
 
     /**
      * @see GuzzleCacheMiddleware::DEFAULT_CACHE_DEBUG_HEADER
      * @var string
      */
-    private $cacheDebugHeader                       = GuzzleCacheMiddleware::DEFAULT_CACHE_DEBUG_HEADER;
+    private string $cacheDebugHeader                       = GuzzleCacheMiddleware::DEFAULT_CACHE_DEBUG_HEADER;
 
     // Guzzle Retry Middleware config ---------------------------------------------------------------------------------
 
@@ -275,49 +269,49 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_ENABLED
      * @var bool
      */
-    private $retryEnabled                           = GuzzleRetryMiddleware::DEFAULT_RETRY_ENABLED;
+    private bool $retryEnabled                           = GuzzleRetryMiddleware::DEFAULT_RETRY_ENABLED;
 
     /**
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_MAX_ATTEMPTS
      * @var int
      */
-    private $retryMaxAttempts                       = GuzzleRetryMiddleware::DEFAULT_RETRY_MAX_ATTEMPTS;
+    private int $retryMaxAttempts                       = GuzzleRetryMiddleware::DEFAULT_RETRY_MAX_ATTEMPTS;
 
     /**
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_MULTIPLIER
      * @var float
      */
-    private $retryMultiplier                        = GuzzleRetryMiddleware::DEFAULT_RETRY_MULTIPLIER;
+    private float $retryMultiplier                        = GuzzleRetryMiddleware::DEFAULT_RETRY_MULTIPLIER;
 
     /**
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_ON_TIMEOUT
      * @var bool
      */
-    private $retryOnTimeout                         = GuzzleRetryMiddleware::DEFAULT_RETRY_ON_TIMEOUT;
+    private bool $retryOnTimeout                         = GuzzleRetryMiddleware::DEFAULT_RETRY_ON_TIMEOUT;
 
     /**
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_ON_STATUS
      * @var array
      */
-    private $retryOnStatus                          = GuzzleRetryMiddleware::DEFAULT_RETRY_ON_STATUS;
+    private array $retryOnStatus                          = GuzzleRetryMiddleware::DEFAULT_RETRY_ON_STATUS;
 
     /**
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_EXPOSE_RETRY_HEADER
      * @var bool
      */
-    private $retryExposeRetryHeader                 = GuzzleRetryMiddleware::DEFAULT_RETRY_EXPOSE_RETRY_HEADER;
+    private bool $retryExposeRetryHeader                 = GuzzleRetryMiddleware::DEFAULT_RETRY_EXPOSE_RETRY_HEADER;
 
     /**
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_LOG_ERROR
      * @var bool
      */
-    private $retryLogError                          = GuzzleRetryMiddleware::DEFAULT_RETRY_LOG_ERROR;
+    private bool $retryLogError                          = GuzzleRetryMiddleware::DEFAULT_RETRY_LOG_ERROR;
 
     /**
      * @see GuzzleRetryMiddleware::DEFAULT_RETRY_LOG_FILE
      * @var string
      */
-    private $retryLogFile                           = GuzzleRetryMiddleware::DEFAULT_RETRY_LOG_FILE;
+    private string $retryLogFile                           = GuzzleRetryMiddleware::DEFAULT_RETRY_LOG_FILE;
 
     // ================================================================================================================
     // API class methods

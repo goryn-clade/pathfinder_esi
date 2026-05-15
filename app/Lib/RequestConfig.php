@@ -90,4 +90,14 @@ class RequestConfig {
         return $this;
     }
 
+    /**
+     * Returns true when $body is an object carrying an ESI error field.
+     * Use !isErrorBody($body) for the success branch.
+     * Note: a non-object $body (e.g. null) returns false here, making
+     * !isErrorBody(null) === true — callers must handle a null body gracefully.
+     */
+    public static function isErrorBody(mixed $body): bool {
+        return is_object($body) && ($body->error ?? null);
+    }
+
 }

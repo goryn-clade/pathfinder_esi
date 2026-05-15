@@ -155,7 +155,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getCharacterClonesRequest(int $characterId, string $accessToken) : RequestConfig {
+    protected function getCharacterClonesRequest(int $characterId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('GET', $this->getEndpointURI(['characters', 'clones', 'GET'], [$characterId])),
             $this->getRequestOptions($accessToken),
@@ -177,7 +177,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getCharacterLocationRequest(int $characterId, string $accessToken) : RequestConfig {
+    protected function getCharacterLocationRequest(int $characterId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('GET', $this->getEndpointURI(['characters', 'location', 'GET'], [$characterId])),
             $this->getRequestOptions($accessToken),
@@ -197,7 +197,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getCharacterShipRequest(int $characterId, string $accessToken) : RequestConfig {
+    protected function getCharacterShipRequest(int $characterId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('GET', $this->getEndpointURI(['characters', 'ship', 'GET'], [$characterId])),
             $this->getRequestOptions($accessToken),
@@ -217,7 +217,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getCharacterOnlineRequest(int $characterId, string $accessToken) : RequestConfig {
+    protected function getCharacterOnlineRequest(int $characterId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('GET', $this->getEndpointURI(['characters', 'online', 'GET'], [$characterId])),
             $this->getRequestOptions($accessToken),
@@ -237,7 +237,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getCharacterRolesRequest(int $characterId, string $accessToken) : RequestConfig {
+    protected function getCharacterRolesRequest(int $characterId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('GET', $this->getEndpointURI(['characters', 'roles', 'GET'], [$characterId])),
             $this->getRequestOptions($accessToken),
@@ -310,7 +310,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getCorporationRolesRequest(int $corporationId, string $accessToken) : RequestConfig {
+    protected function getCorporationRolesRequest(int $corporationId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         $requestOptions = $this->getRequestOptions($accessToken);
 
         // 403 'Character cannot grant roles' error
@@ -739,7 +739,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getUniverseStructureRequest(int $structureId, string $accessToken) : RequestConfig {
+    protected function getUniverseStructureRequest(int $structureId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('GET', $this->getEndpointURI(['universe', 'structures', 'GET'], [$structureId])),
             $this->getRequestOptions($accessToken),
@@ -891,7 +891,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param array $options
      * @return RequestConfig
      */
-    protected function setWaypointRequest(int $destinationId, string $accessToken, array $options = []) : RequestConfig {
+    protected function setWaypointRequest(int $destinationId, #[\SensitiveParameter] string $accessToken, array $options = []) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('POST', $this->getEndpointURI(['ui', 'autopilot', 'waypoint', 'POST'])),
             $this->getRequestOptions($accessToken, null, [
@@ -916,7 +916,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function openWindowRequest(int $targetId, string $accessToken) : RequestConfig {
+    protected function openWindowRequest(int $targetId, #[\SensitiveParameter] string $accessToken) : RequestConfig {
         return new RequestConfig(
             WebClient::newRequest('POST', $this->getEndpointURI(['ui', 'openwindow', 'information', 'POST'])),
             $this->getRequestOptions($accessToken, null, [
@@ -964,7 +964,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param bool $strict
      * @return RequestConfig
      */
-    protected function searchRequest(array $categories, string $search, int $characterId, string $accessToken, bool $strict = false) : RequestConfig {
+    protected function searchRequest(array $categories, string $search, int $characterId, #[\SensitiveParameter] string $accessToken, bool $strict = false) : RequestConfig {
         $query = [
             'categories'            => $categories,
             'search'                => $search,
@@ -1058,7 +1058,7 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
      * @param array $query
      * @return array
      */
-    protected function getRequestOptions(string $accessToken = '', $content = null, array $query = []) : array {
+    protected function getRequestOptions(#[\SensitiveParameter] string $accessToken = '', $content = null, array $query = []) : array {
         $options = [];
 
         if(!empty($accessToken)){

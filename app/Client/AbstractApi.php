@@ -681,7 +681,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
      * @param string $type
      * @return array
      */
-    protected function getAuthHeader(string $credentials, string $type = 'Basic') : array {
+    protected function getAuthHeader(#[\SensitiveParameter] string $credentials, string $type = 'Basic') : array {
         return ['Authorization' => ucfirst($type) . ' ' . $credentials];
     }
 

@@ -24,7 +24,7 @@ class Sso extends Ccp\AbstractCcp implements SsoInterface {
      * @param string $accessToken
      * @return RequestConfig
      */
-    protected function getVerifyCharacterRequest(string $accessToken) : RequestConfig {
+    protected function getVerifyCharacterRequest(#[\SensitiveParameter] string $accessToken) : RequestConfig {
         $requestOptions = [
             'headers' => $this->getAuthHeader($accessToken, 'Bearer')
         ];
@@ -55,7 +55,7 @@ class Sso extends Ccp\AbstractCcp implements SsoInterface {
      * @param array $requestParams
      * @return RequestConfig
      */
-    protected function getAccessRequest(array $credentials, array $requestParams = []) : RequestConfig {
+    protected function getAccessRequest(#[\SensitiveParameter] array $credentials, array $requestParams = []) : RequestConfig {
         $requestOptions = [
             'form_params' => $requestParams,
             'auth' => $credentials

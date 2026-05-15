@@ -239,7 +239,7 @@ class GuzzleLogMiddleware {
                 $this->log($options, $request, $response, $reason);
             }
 
-            return \GuzzleHttp\Promise\rejection_for($reason);
+            return \GuzzleHttp\Promise\Create::rejectionFor($reason);
         };
     }
 

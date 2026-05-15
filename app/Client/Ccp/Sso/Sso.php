@@ -34,7 +34,7 @@ class Sso extends Ccp\AbstractCcp implements SsoInterface {
             $requestOptions,
             function($body) : array {
                 $characterData = [];
-                if(!(is_object($body) && ($body->error ?? null))){
+                if(is_object($body) && !($body->error ?? null)){
                     $characterData = (new Mapper\Sso\Character($body))->getData();
                 }
 
@@ -66,7 +66,7 @@ class Sso extends Ccp\AbstractCcp implements SsoInterface {
             $requestOptions,
             function($body) : array {
                 $accessData = [];
-                if(!($body->error ?? null)){
+                if(is_object($body) && !($body->error ?? null)){
                     $accessData = (new Mapper\Sso\Access($body))->getData();
                 }
 
@@ -87,7 +87,7 @@ class Sso extends Ccp\AbstractCcp implements SsoInterface {
             $requestOptions,
             function($body) : array {
                 $jwksData = [];
-                if(!(is_object($body) && ($body->error ?? null))){
+                if(is_object($body) && !($body->error ?? null)){
                     $jwksData = (array)$body;
                 }
 

@@ -18,6 +18,12 @@ use Psr\Http\Message\ResponseInterface;
 class GuzzleLogMiddleware {
 
     /**
+     * Header names (lowercase) whose values are redacted before logging.
+     * Matched case-insensitively against PSR-7 header names.
+     */
+    const SENSITIVE_HEADERS = ['authorization', 'set-cookie', 'proxy-authorization', 'cookie'];
+
+    /**
      * default for: global enable this middleware
      */
     const DEFAULT_LOG_ENABLED           = true;
@@ -322,7 +328,7 @@ class GuzzleLogMiddleware {
         ];
 
         if($options['log_request_headers']){
-            $logData['requestHeaders']  =  $request->getHeaders();
+            $logData['requestHeaders']  =  $this->redactHeaders($request->getHeaders());
         }
 
         return $logData;
@@ -347,7 +353,7 @@ class GuzzleLogMiddleware {
         ];
 
         if($options['log_response_headers']){
-            $logData['responseHeaders'] =  $response->getHeaders();
+            $logData['responseHeaders'] =  $this->redactHeaders($response->getHeaders());
         }
 
         return $logData;
@@ -533,6 +539,24 @@ class GuzzleLogMiddleware {
         $optionsNew['log_off_status'] = array_unique(array_merge((array)($options['log_off_status'] ?? []), (array)($optionsNew['log_off_status'] ?? [])));
 
         return array_replace($options, $optionsNew);
+    }
+
+    /**
+     * Replace values of sensitive headers with [REDACTED] before logging.
+     * Matching is case-insensitive per RFC 7230 and PSR-7.
+     * @param array $headers
+     * @return array
+     */
+    protected function redactHeaders(array $headers) : array {
+        $redacted = [];
+        foreach($headers as $name => $value){
+            if(in_array(strtolower($name), self::SENSITIVE_HEADERS, true)){
+                $redacted[$name] = ['[REDACTED]'];
+            }else{
+                $redacted[$name] = $value;
+            }
+        }
+        return $redacted;
     }
 
     /**

@@ -9,3 +9,8 @@ out
 gen
 composer.lock
 vendor/
+
+# Local audit / planning notes (not part of the library)
+.audit/
+rector-report.txt
+rector.php

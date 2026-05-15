@@ -34,6 +34,7 @@
     "cache/void-adapter": "^1.1"
   },
   "require-dev": {
-    "rector/rector": "^2.4"
+    "rector/rector": "^2.4",
+    "phpstan/phpstan": "^2.1"
   }
 }

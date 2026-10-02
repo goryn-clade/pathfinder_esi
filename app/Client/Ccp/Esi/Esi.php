@@ -162,7 +162,9 @@ class Esi extends Ccp\AbstractCcp implements EsiInterface {
             function($body) : array {
                 $clonesData = [];
                 if(!RequestConfig::isErrorBody($body)){
-                    $clonesData['home'] = (new Mapper\Character\CharacterClone($body->home_location))->getData();
+                    // home_location is optional in ESI -> characters without one must not fail
+                    $clonesData['home'] = isset($body->home_location) ?
+                        (new Mapper\Character\CharacterClone($body->home_location))->getData() : [];
                 }else{
                     $clonesData['error'] = ($body->error ?? null);
                 }

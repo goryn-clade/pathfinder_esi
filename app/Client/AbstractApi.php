@@ -26,6 +26,7 @@ use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\HandlerStack;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractApi extends \Prefab implements ApiInterface {
 
@@ -903,14 +904,33 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
                 $response = WebClient::newErrorResponse($e, $this->getAcceptType());
             }
 
-            $body = $response->getBody();
-            $bodyContent = ($body instanceof JsonStreamInterface) ? $body->decode() : $body->getContents();
+            $bodyContent = $this->getBodyContent($response);
 
             // call custom formatter for current $result (same $key)
             $bodyContent = is_callable($formatter = $requestConfig->getFormatter()) ? $formatter($bodyContent) : $bodyContent;
         }
 
         return $bodyContent;
+    }
+
+    /**
+     * get decoded body content from $response
+     * -> a 2xx response with invalid JSON (e.g. a proxy error page or a cut connection)
+     *    returns the same error body as a failed request, instead of throwing
+     * @param ResponseInterface $response
+     * @return mixed
+     */
+    protected function getBodyContent(ResponseInterface $response){
+        $body = $response->getBody();
+        if(!($body instanceof JsonStreamInterface)){
+            return $body->getContents();
+        }
+
+        try{
+            return $body->decode();
+        }catch(\InvalidArgumentException | \RuntimeException $e){
+            return WebClient::newErrorResponse($e, true)->getBody()->decode();
+        }
     }
 
     /**
@@ -966,8 +986,7 @@ abstract class AbstractApi extends \Prefab implements ApiInterface {
                 );
             }
 
-            $body = $response->getBody();
-            $bodyContent = ($body instanceof JsonStreamInterface) ? $body->decode() : $body->getContents();
+            $bodyContent = $this->getBodyContent($response);
 
             // call custom formatter for current $result (same $key)
             return is_callable($formatter = $requestConfigs[$key]->getFormatter()) ? $formatter($bodyContent) : $bodyContent;

@@ -69,6 +69,11 @@ class GuzzleLogMiddleware {
     const DEFAULT_LOG_5XX               = true;
 
     /**
+     * max length of an error message taken from a non-JSON response body (e.g. an HTML error page)
+     */
+    const ERROR_MESSAGE_MAX_LENGTH      = 200;
+
+    /**
      * default for: log requests with HTTP 4xx response
      */
     const DEFAULT_LOG_4XX               = true;
@@ -442,12 +447,16 @@ class GuzzleLogMiddleware {
                 }
 
                 // ... check if "error" key exists in content, with error message
-                if(is_string($content->error)){
+                if(is_object($content) && isset($content->error) && is_string($content->error)){
                     $error = $content->error;
                 }
             }else{
                 // no Json encoded content expected -> simple text
-                $error = $body->getContents();
+                // -> often an HTML error page from a proxy: strip tags, collapse whitespace, cap length
+                $error = trim((string)preg_replace('/\s+/', ' ', strip_tags($body->getContents())));
+                if(strlen($error) > self::ERROR_MESSAGE_MAX_LENGTH){
+                    $error = substr($error, 0, self::ERROR_MESSAGE_MAX_LENGTH) . '…';
+                }
             }
 
             // rewind $body for next access. !important!

@@ -51,7 +51,7 @@ class PrivateCacheStrategy implements CacheStrategyInterface {
      * PrivateCacheStrategy constructor.
      * @param CacheStorageInterface|null $cache
      */
-    public function __construct(CacheStorageInterface $cache = null){
+    public function __construct(?CacheStorageInterface $cache = null){
         // if no CacheStorageInterface (e.g. Psr6CacheStorage) defined
         // -> use default VolatileRuntimeStorage (store data in temp array)
         $this->storage = !is_null($cache) ? $cache : new VolatileRuntimeStorage();

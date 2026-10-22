@@ -79,8 +79,8 @@ class CacheEntry {
         RequestInterface $request,
         ResponseInterface $response,
         \DateTime $staleAt,
-        \DateTime $staleIfErrorTo = null,
-        \DateTime $staleWhileRevalidateTo = null
+        ?\DateTime $staleIfErrorTo = null,
+        ?\DateTime $staleWhileRevalidateTo = null
     ){
         $this->dateCreated = new \DateTime();
         $this->request = $request;

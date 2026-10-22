@@ -528,9 +528,9 @@ class GuzzleLogMiddleware {
             '{target}'                      => $logData['request']['target'],
             '{version}'                     => $logData['request']['version'],
 
-            '{code}'                        => $logData['response']['code'] ? : 'NULL',
-            '{phrase}'                      => $logData['response']['phrase'] ? : '',
-            '{res_header_content-length}'   => $logData['response']['res_header_content-length'] ? : 0
+            '{code}'                        => ($logData['response']['code'] ?? null) ? : 'NULL',
+            '{phrase}'                      => ($logData['response']['phrase'] ?? null) ? : '',
+            '{res_header_content-length}'   => ($logData['response']['res_header_content-length'] ?? null) ? : 0
         ];
 
         return str_replace(array_keys($replace), array_values($replace), $message);

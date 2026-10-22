@@ -14,9 +14,12 @@ This Web client is build on [_Guzzle_](http://guzzlephp.org) and makes much use 
 [_Middleware_](http://docs.guzzlephp.org/en/stable/handlers-and-middleware.html#middleware) concept in _Guzzle_.
 
 ### Installation:
-Use [_Composer_](https://getcomposer.org/) for installation. In `composer.json` `require` section add:
+Use [_Composer_](https://getcomposer.org/) for installation. Packagist does not list v3.0.1, so add this repository as well. Composer then reads the release tags from GitHub. In `composer.json` add:
 ```json
 {
+  "repositories": [
+    { "type": "vcs", "url": "https://github.com/goryn-clade/pathfinder_esi" }
+  ],
   "require": {
     "php-64bit": ">=8.2",
     "goryn-clade/pathfinder_esi": "^3.0"

@@ -1,6 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Call to an undefined method Psr\\Http\\Message\\StreamInterface\:\:decode\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: app/Client/AbstractApi.php
+
+		-
 			message: '#^PHPDoc tag @return with type \(callable\)\|null is not subtype of native type Closure\|null\.$#'
 			identifier: return.phpDocType
 			count: 1
@@ -31,28 +37,10 @@ parameters:
 			path: app/Config/AbstractConfig.php
 
 		-
-			message: '#^Deprecated in PHP 8\.4\: Parameter \#4 \$staleIfErrorTo \(DateTime\) is implicitly nullable via default value null\.$#'
-			identifier: parameter.implicitlyNullable
-			count: 1
-			path: app/Lib/Middleware/Cache/CacheEntry.php
-
-		-
-			message: '#^Deprecated in PHP 8\.4\: Parameter \#5 \$staleWhileRevalidateTo \(DateTime\) is implicitly nullable via default value null\.$#'
-			identifier: parameter.implicitlyNullable
-			count: 1
-			path: app/Lib/Middleware/Cache/CacheEntry.php
-
-		-
 			message: '#^Parameter \#2 \$value of method Psr\\Http\\Message\\MessageInterface\:\:withHeader\(\) expects array\<string\>\|string, int given\.$#'
 			identifier: argument.type
 			count: 1
 			path: app/Lib/Middleware/Cache/CacheEntry.php
-
-		-
-			message: '#^Deprecated in PHP 8\.4\: Parameter \#1 \$cache \(Exodus4D\\ESI\\Lib\\Middleware\\Cache\\Storage\\CacheStorageInterface\) is implicitly nullable via default value null\.$#'
-			identifier: parameter.implicitlyNullable
-			count: 1
-			path: app/Lib/Middleware/Cache/Strategy/PrivateCacheStrategy.php
 
 		-
 			message: '#^Property Exodus4D\\ESI\\Lib\\Middleware\\GuzzleCacheMiddleware\:\:\$waitingRevalidate \(array\<GuzzleHttp\\Promise\\Promise\>\) does not accept array\<GuzzleHttp\\Promise\\PromiseInterface\>\.$#'
@@ -115,10 +103,28 @@ parameters:
 			path: app/Lib/Middleware/GuzzleRetryMiddleware.php
 
 		-
+			message: '''
+				#^Call to deprecated method jsonDecode\(\) of class GuzzleHttp\\Utils\:
+				Utils\:\:jsonDecode\(\) will be removed in guzzlehttp/guzzle\:8\.0\. Use PHP's json_decode\(\) instead\.$#
+			'''
+			identifier: staticMethod.deprecated
+			count: 1
+			path: app/Lib/Stream/JsonStream.php
+
+		-
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
 			count: 1
 			path: app/Lib/Stream/JsonStream.php
+
+		-
+			message: '''
+				#^Call to deprecated method jsonEncode\(\) of class GuzzleHttp\\Utils\:
+				Utils\:\:jsonEncode\(\) will be removed in guzzlehttp/guzzle\:8\.0\. Use PHP's json_encode\(\) instead\.$#
+			'''
+			identifier: staticMethod.deprecated
+			count: 1
+			path: app/Lib/WebClient.php
 
 		-
 			message: '#^Array has 2 duplicate keys with value ''updated_at'' \(''updated_at'', ''updated_at''\)\.$#'

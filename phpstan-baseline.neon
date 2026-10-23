@@ -103,28 +103,10 @@ parameters:
 			path: app/Lib/Middleware/GuzzleRetryMiddleware.php
 
 		-
-			message: '''
-				#^Call to deprecated method jsonDecode\(\) of class GuzzleHttp\\Utils\:
-				Utils\:\:jsonDecode\(\) will be removed in guzzlehttp/guzzle\:8\.0\. Use PHP's json_decode\(\) instead\.$#
-			'''
-			identifier: staticMethod.deprecated
-			count: 1
-			path: app/Lib/Stream/JsonStream.php
-
-		-
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
 			count: 1
 			path: app/Lib/Stream/JsonStream.php
-
-		-
-			message: '''
-				#^Call to deprecated method jsonEncode\(\) of class GuzzleHttp\\Utils\:
-				Utils\:\:jsonEncode\(\) will be removed in guzzlehttp/guzzle\:8\.0\. Use PHP's json_encode\(\) instead\.$#
-			'''
-			identifier: staticMethod.deprecated
-			count: 1
-			path: app/Lib/WebClient.php
 
 		-
 			message: '#^Array has 2 duplicate keys with value ''updated_at'' \(''updated_at'', ''updated_at''\)\.$#'

@@ -165,14 +165,19 @@ Most APIs will only send compressed response data if `Accept-Encoding` HTTP Head
 Issues can be tracked here: https://github.com/goryn-clade/pathfinder/issues
 
 ## Development
-If you are a developer you might have **both** repositories ([goryn-clade/pathfinder](https://github.com/goryn-clade/pathfinder), [goryn-clade/pathfinder_esi](https://github.com/goryn-clade/pathfinder_esi) ) checked out locally.
+To test changes in a **local** [goryn-clade/pathfinder_esi](https://github.com/goryn-clade/pathfinder_esi) checkout with a **local** [goryn-clade/pathfinder](https://github.com/goryn-clade/pathfinder) installation, point pathfinder at your checkout with a Composer [`path` repository](https://getcomposer.org/doc/05-repositories.md#path).
 
-In this case you probably want to _test_ changes in your **local** [goryn-clade/pathfinder_esi](https://github.com/goryn-clade/pathfinder_esi) repo using your **local** [goryn-clade/pathfinder](https://github.com/goryn-clade/pathfinder) installation.
+This works for a pathfinder installation that runs from its own folder. It does not work inside a Docker build such as [pathfinder-containers](https://github.com/goryn-clade/pathfinder-containers): `../pathfinder_esi` is outside the build context, and the `vendor` symlink would point nowhere in the image.
 
-1. Clone/Checkout **both** repositories local next to each other
-2. Make your changes in your pathfinder_esi repo and **commit** changes (no push!)
-3. Switch to your pathfinder repo
-4. Run _Composer_ with [`composer-dev.json`](https://github.com/goryn-clade/pathfinder/blob/master/composer-dev.json), which installs pathfinder_esi from your **local** repository.
-    - Unix: `$set COMPOSER=composer-dev.json && composer update`
-    - Windows (PowerShell): `$env:COMPOSER="composer-dev.json"; composer update --no-suggest`
-
+1. Clone **both** repositories next to each other, so `pathfinder` and `pathfinder_esi` share a parent folder.
+2. In `pathfinder_esi`, make your changes on a named branch (for example `my-change`). Composer takes the package version from the branch name, so a detached HEAD does not work.
+3. In `pathfinder`, add your checkout as a repository. Composer puts it before the GitHub repository, so it wins:
+    ```
+    composer config repositories.local path ../pathfinder_esi
+    ```
+4. In `pathfinder`, require your branch as `dev-<branch>`. After `as`, put the version of `goryn-clade/pathfinder_esi` that pathfinder's `composer.json` requires now, so other constraints still match:
+    ```
+    composer require "goryn-clade/pathfinder_esi:dev-my-change as <required version>"
+    ```
+    Composer symlinks `vendor/goryn-clade/pathfinder_esi` to your checkout. Edits in `pathfinder_esi` take effect at once; you do not need to commit them.
+5. When you are done, restore pathfinder's `composer.json` and `composer.lock` (for example `git checkout -- composer.json composer.lock`) and run `composer install`. Do not commit the `path` repository.

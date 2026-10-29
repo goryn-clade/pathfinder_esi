@@ -161,7 +161,7 @@ class WebClient {
         $body = (object)[];
         $body->error = implode(', ', $message);
 
-        $bodyStream = \GuzzleHttp\Psr7\Utils::streamFor(json_encode($body, JSON_THROW_ON_ERROR));
+        $bodyStream = \GuzzleHttp\Psr7\Utils::streamFor(json_encode($body, JSON_THROW_ON_ERROR | JSON_INVALID_UTF8_SUBSTITUTE));
 
         if($json){
             // use JsonStream for as body
